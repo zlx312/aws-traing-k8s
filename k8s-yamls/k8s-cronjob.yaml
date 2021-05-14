@@ -1,0 +1,22 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: test-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  startingDeadlineSeconds: 15
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: test-cronjob
+        spec:
+          containers:
+          - name: test-cronjob
+            image: linxue/homework-docker:v1
+            args:
+            - "/bin/sh"
+            - "-c"
+            - "date; echo Hello from the Kubernetes cluster"
+          restartPolicy: OnFailure
